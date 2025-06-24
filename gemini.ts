@@ -8,6 +8,11 @@ export async function askGemini(prompt: string): Promise<string> {
         })
     });
 
+    // Check if the response is ok
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Error from Gemini API: ${errorText}`);
+    }
     const data = await response.json();
 	return data.candidates[0]?.content?.parts[0].text || "No response";
 }
