@@ -42,7 +42,7 @@ export const sendMessageToChannel = async (text: string) => {
 }
 
 export const startBot = async () => {
-    const token = process.env.DISCORD_BOT_TOKEN_ID;
+    const token = process.env.DISCORD_TOKEN_ID;
     if (!token) {
         throw new Error("DISCORD_BOT_TOKEN is not set in environment variables.");
     }
