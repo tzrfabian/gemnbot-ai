@@ -1,4 +1,4 @@
-import Elysia from "elysia";
+import { Elysia } from "elysia";
 import { sendMessageToChannel } from "./dcbot";
 import { askGemini } from "./gemini";
 

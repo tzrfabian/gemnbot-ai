@@ -12,7 +12,7 @@ let defaultChannel: TextChannel | null = null;
 
 client.once("ready", () => {
     console.log(`Logged in as ${client.user?.tag}!`);
-    const defaultChannelId = process.env.DEFAULT_CHANNEL_ID;
+    const defaultChannelId = process.env.DISCORD_CHANNEL_ID;
     // Find the default channel to send messages
     if (!defaultChannelId) {
         console.warn("DEFAULT_CHANNEL_ID is not set in environment variables.");
