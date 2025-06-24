@@ -1,4 +1,5 @@
 import { Client, GatewayIntentBits, TextChannel } from "discord.js";
+import { askGemini } from "./gemini";
 
 export const client = new Client({
     intents: [
@@ -27,12 +28,36 @@ client.once("ready", () => {
     }
 });
 
-client.on("messageCreate", async (message) => {
-    if (message.author.bot) return; // Ignore bot messages
+// Uncomment the following code to handle messages and commands
+// Note: This code is commented out to avoid conflicts with the server's message handling.
+// If you want to enable command handling, you can uncomment this section.
+// client.on("messageCreate", async (message) => {
+//     if (message.author.bot) return; // Ignore bot messages
 
-    // Check if the message is a command
-    if (message.content === "!ping") {
-        await message.reply("Pong!");
+//     // Check if the message is a command
+//     if (message.content === "!ping") {
+//         await message.reply("Pong!");
+//     }
+// });
+
+// Interaction handling for slash commands
+client.on("interactionCreate", async (interaction) => {
+    if(!interaction.isChatInputCommand()) return;
+
+    if (interaction.commandName === "ping") {
+        await interaction.reply("Pong!");
+    }
+
+    if(interaction.commandName === "ask") {
+        const prompt = interaction.options.getString("prompt", true);
+        await interaction.deferReply();
+        try {
+            const response = await askGemini(prompt);
+            await interaction.editReply(response);
+        } catch (error) {
+            console.error("Error handling ask command:", error);
+            await interaction.editReply("An error occurred while processing your request.");
+        }
     }
 });
 

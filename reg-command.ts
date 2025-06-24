@@ -25,7 +25,6 @@ const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN_ID |
             Routes.applicationCommands(process.env.DISCORD_CLIENT_ID || ''),
             {body: commands}
         );
-
         console.log("Successfully registered application (/) commands.");
     } catch (error) {
         console.error("Error refreshing application commands:", error);
