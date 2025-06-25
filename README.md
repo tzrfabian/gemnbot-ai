@@ -40,7 +40,3 @@
 1. Fork the repository.
 2. Create a new branch for your feature or fix.
 3. Submit a pull request with a clear description.
-
-### License
-
-See `LICENSE` file for details.
