@@ -13,6 +13,12 @@ const commands = [
         .setDescription("The question you want to ask the bot")
         .setRequired(true)
     ),
+    new SlashCommandBuilder()
+    .setName("connect")
+    .setDescription("Connects to your voice channel"),
+    new SlashCommandBuilder()
+    .setName("disconnect")
+    .setDescription("Disconnects from the voice channel"),
 ].map(command => command.toJSON());
 
 const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN_ID || '');

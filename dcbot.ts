@@ -1,11 +1,14 @@
 import { Client, GatewayIntentBits, TextChannel } from "discord.js";
 import handleAsk from "./commands/ask";
+import handleConnect from "./commands/connect";
+import handleDisconnect from "./commands/disconnect";
 
 export const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.MessageContent,
+        GatewayIntentBits.GuildVoiceStates
     ]
 });
 
@@ -44,12 +47,22 @@ client.once("ready", () => {
 client.on("interactionCreate", async (interaction) => {
     if(!interaction.isChatInputCommand()) return;
 
-    if (interaction.commandName === "ping") {
-        await interaction.reply("Pong!");
-    }
-
-    if(interaction.commandName === "ask") {
-        await handleAsk(interaction);
+    switch (interaction.commandName) {
+        case "ping":
+            await interaction.reply("Pong!");
+            break;
+        case "ask":
+            await handleAsk(interaction);
+            break;
+        case "connect":
+            await handleConnect(interaction);
+            break;
+        case "disconnect":
+            await handleDisconnect(interaction);
+            break;
+        default:
+            await interaction.reply("Unknown command.");
+            break;
     }
 });
 
