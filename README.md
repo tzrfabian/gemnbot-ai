@@ -1,18 +1,15 @@
 # Gemnbot-ai
 
-To install dependencies:
+### Tech Stack
 
-```bash
-bun install
-```
-
-To run:
-
-```bash
-bun run index.ts
-```
+- <img src="https://bun.sh/logo.svg" alt="Bun Logo" width="24" height="24" style="vertical-align:middle;"> **Bun**: JavaScript runtime for fast, modern development.
+- <img src="https://elysiajs.com/assets/elysia.svg" alt="Elysia Logo" width="24" height="24" style="vertical-align:middle;"> **Elysia**: Fast, modern web framework for building APIs with Bun.
+- <img src="https://www.svgrepo.com/show/374146/typescript-official.svg" alt="Elysia Logo" width="24" height="24" style="vertical-align:middle;"> **TypeScript**: Strongly typed programming language that builds on JavaScript.
+- <img src="https://www.svgrepo.com/show/346102/markdown-fill.svg" alt="Elysia Logo" width="24" height="24" style="vertical-align:middle;"> **Markdown**: For project documentation.
+- **Other dependencies**: As specified in `package.json`.
 
 ## Documentation
+
 
 ### Project Structure
 
@@ -28,11 +25,15 @@ bun run index.ts
 
 2. **Run the project**  
     Use `bun run index.ts` to start the application.
+    Or
+    Use `bun --hot run index.ts` to running & do live updates when you doing changes.
 
 ### Requirements
 
-- [Bun](https://bun.sh) v1.2.4 or later
-- Node.js (if required by dependencies)
+- **Bun** v1.2.4 or later ([bun.sh](https://bun.sh))
+- **Elysia** (included as a dependency)
+- **TypeScript** (included as a dependency)
+
 
 ### Contributing
 
