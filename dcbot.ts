@@ -50,9 +50,15 @@ client.on("interactionCreate", async (interaction) => {
 
     if(interaction.commandName === "ask") {
         const prompt = interaction.options.getString("prompt", true);
+        // Uncomment if you want to include the username in the reply
+        // const username = interaction.user.username;
         await interaction.deferReply();
         try {
             const response = await askGemini(prompt);
+            // Uncomment if you want to use the username in the reply
+            // await interaction.editReply(`**${username}** used \`ask\`: ${prompt}\n\n**Answers:**\n${response}`);
+
+            // Directly reply with the response
             await interaction.editReply(response);
         } catch (error) {
             console.error("Error handling ask command:", error);
