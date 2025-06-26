@@ -1,5 +1,5 @@
 import type { ChatInputCommandInteraction } from "discord.js";
-import { askGemini } from "../gemini";
+import { askGemini } from "../api/gemini";
 
 export default async function handleAsk(interaction: ChatInputCommandInteraction) {
     const prompt = interaction.options.getString("prompt", true);
