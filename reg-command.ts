@@ -17,6 +17,14 @@ const commands = [
     .setName("connect")
     .setDescription("Connects to your voice channel"),
     new SlashCommandBuilder()
+    .setName("play")
+    .setDescription("Plays a song from your query")
+    .addStringOption(option => 
+        option.setName("query")
+        .setDescription("The song you want to play")
+        .setRequired(true)
+    ),
+    new SlashCommandBuilder()
     .setName("disconnect")
     .setDescription("Disconnects from the voice channel"),
 ].map(command => command.toJSON());
