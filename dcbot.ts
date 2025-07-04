@@ -3,6 +3,15 @@ import handleAsk from "./commands/ask";
 import handleConnect from "./commands/connect";
 import handleDisconnect from "./commands/disconnect";
 import handlePlay from "./commands/play";
+import { DisTube, Queue, Song, type DisTubeEvents} from "distube";
+import SpotifyPlugin from "@distube/spotify";
+import { config } from "dotenv";
+import { YtDlpPlugin } from "@distube/yt-dlp";
+import { YouTubePlugin } from "@distube/youtube";
+import handlePause from "./commands/pause";
+import handleStop from "./commands/stop";
+
+config();
 
 export const client = new Client({
     intents: [
@@ -11,6 +20,22 @@ export const client = new Client({
         GatewayIntentBits.MessageContent,
         GatewayIntentBits.GuildVoiceStates
     ]
+});
+
+export const distube = new DisTube(client, {
+    plugins: [
+        new SpotifyPlugin({
+            api: {
+                clientId: process.env.SPOTIFY_CLIENT_ID || "",
+                clientSecret: process.env.SPOTIFY_CLIENT_SECRET || "",
+            },
+        }),
+        new YtDlpPlugin()
+    ],
+    emitNewSongOnly: true,
+    joinNewVoiceChannel: true,
+    emitAddSongWhenCreatingQueue: false,
+    emitAddListWhenCreatingQueue: false,
 });
 
 let defaultChannel: TextChannel | null = null;
@@ -31,6 +56,31 @@ client.once("ready", () => {
         console.log(`Default channel set to: ${defaultChannel.name}`);
     }
 });
+
+distube
+    .on("playSong" as keyof DisTubeEvents, (queue: Queue, song: Song) => {
+    (queue.textChannel as TextChannel).send(`Now playing: **${song.name}** - \`${song.formattedDuration}\``);
+    })
+    .on("addSong" as keyof DisTubeEvents, (queue: Queue, song: Song) => {
+        (queue.textChannel as TextChannel).send(`Added to queue: **${song.name}** - \`${song.formattedDuration}\``);
+    })
+    .on("finish" as keyof DisTubeEvents, (queue: Queue) => {
+        queue.voice.leave();
+        (queue.textChannel as TextChannel).send("Queue finished, leaving voice channel.");
+    })
+    .on("empty" as keyof DisTubeEvents, (queue: Queue) => {
+        queue.voice.leave();
+        (queue.textChannel as TextChannel).send("Voice channel is empty, leaving.");
+    })
+    .on("disconnect" as keyof DisTubeEvents, (queue: Queue) => {
+        (queue.textChannel as TextChannel).send("Disconnected from voice channel.");
+    })
+    .on("error" as keyof DisTubeEvents, (error: Error, queue?: Queue) => {
+        console.error("Error occurred:", error);
+        if (queue && queue.textChannel) {
+            (queue.textChannel as TextChannel).send(`An error occurred: ${error.message}`);
+        }
+    });
 
 // Uncomment the following code to handle messages and commands
 // Note: This code is commented out to avoid conflicts with the server's message handling.
@@ -60,6 +110,12 @@ client.on("interactionCreate", async (interaction) => {
             break;
         case "play":
             await handlePlay(interaction);
+            break;
+        case "pause":
+            await handlePause(interaction);
+            break;
+        case "stop":
+            await handleStop(interaction);
             break;
         case "disconnect":
             await handleDisconnect(interaction);

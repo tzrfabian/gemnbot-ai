@@ -25,6 +25,15 @@ const commands = [
         .setRequired(true)
     ),
     new SlashCommandBuilder()
+    .setName("pause")
+    .setDescription("Pauses the current song"),
+    new SlashCommandBuilder()
+    .setName("stop")
+    .setDescription("Stops the current song"),
+    new SlashCommandBuilder()
+    .setName("resume")
+    .setDescription("Resumes the paused song"),
+    new SlashCommandBuilder()
     .setName("disconnect")
     .setDescription("Disconnects from the voice channel"),
 ].map(command => command.toJSON());
