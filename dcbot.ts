@@ -10,6 +10,7 @@ import { YtDlpPlugin } from "@distube/yt-dlp";
 import { YouTubePlugin } from "@distube/youtube";
 import handlePause from "./commands/pause";
 import handleStop from "./commands/stop";
+import handleResume from "./commands/resume";
 
 config();
 
@@ -116,6 +117,9 @@ client.on("interactionCreate", async (interaction) => {
             break;
         case "stop":
             await handleStop(interaction);
+            break;
+        case "resume":
+            await handleResume(interaction);
             break;
         case "disconnect":
             await handleDisconnect(interaction);
