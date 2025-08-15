@@ -33,6 +33,42 @@
 - **TypeScript** (included as a dependency)
 
 
+# Command Instruction
+## Play Command Usage
+
+The `/play` command now supports both song titles and direct URLs:
+
+### Supported Formats:
+
+#### 1. Song Title Search
+- `/play never gonna give you up`
+- `/play imagine dragons believer`
+- `/play taylor swift shake it off`
+
+The bot will automatically search YouTube and play the first result.
+
+#### 2. Direct URLs
+- **YouTube**: `/play https://www.youtube.com/watch?v=dQw4w9WgXcQ`
+- **Spotify**: `/play https://open.spotify.com/track/4iV5W9uYEdYUVa79Axb7Rh`
+- **SoundCloud**: `/play https://soundcloud.com/artist/track`
+
+### How it works:
+1. If you provide a URL, the bot plays it directly
+2. If you provide a song title, the bot:
+   - Shows "🔍 Searching YouTube..."
+   - Uses YouTube Data API to find the best match
+   - Plays the found video
+
+### Requirements:
+- You must be in a voice channel
+- The bot needs YouTube Data API access (already configured)
+- Supports Spotify and SoundCloud links through DisTube plugins
+
+### Error Handling:
+- If no results found: "❌ No results found on YouTube for your search"
+- If API fails: Falls back to error message with suggestion to use direct URL
+- All interaction timeouts are properly handled
+
 ### Contributing
 
 1. Fork the repository.

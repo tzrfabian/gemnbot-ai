@@ -4,7 +4,7 @@ export async function askGemini(prompt: string): Promise<string> {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
-            contents: [{parts: [{text: `${prompt}. Do not more than 2000 characters.`}]}],
+            contents: [{parts: [{text: `${prompt}.Just answer the question. But, do not more than 2000 characters.`}]}],
         })
     });
 
