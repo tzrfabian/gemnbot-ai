@@ -11,6 +11,8 @@ import { YouTubePlugin } from "@distube/youtube";
 import handlePause from "./commands/pause";
 import handleStop from "./commands/stop";
 import handleResume from "./commands/resume";
+import handleMute from "./commands/mute";
+import handleUnmute from "./commands/unmute";
 
 config();
 
@@ -123,6 +125,12 @@ client.on("interactionCreate", async (interaction) => {
             break;
         case "disconnect":
             await handleDisconnect(interaction);
+            break;
+        case "mute":
+            await handleMute(interaction);
+            break;
+        case "unmute":
+            await handleUnmute(interaction);
             break;
         default:
             await interaction.reply("Unknown command.");

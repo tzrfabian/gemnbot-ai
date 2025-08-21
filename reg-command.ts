@@ -36,6 +36,39 @@ const commands = [
     new SlashCommandBuilder()
     .setName("disconnect")
     .setDescription("Disconnects from the voice channel"),
+    new SlashCommandBuilder()
+    .setName("mute")
+    .setDescription("Mutes a member for a specified duration")
+    .addUserOption(option =>
+        option.setName("user")
+        .setDescription("The user to mute")
+        .setRequired(true)
+    )
+    .addIntegerOption(option =>
+        option.setName("duration")
+        .setDescription("Duration in minutes (default: 10, max: 40320)")
+        .setRequired(false)
+        .setMinValue(1)
+        .setMaxValue(40320)
+    )
+    .addStringOption(option =>
+        option.setName("reason")
+        .setDescription("Reason for muting")
+        .setRequired(false)
+    ),
+    new SlashCommandBuilder()
+    .setName("unmute")
+    .setDescription("Unmutes a member")
+    .addUserOption(option =>
+        option.setName("user")
+        .setDescription("The user to unmute")
+        .setRequired(true)
+    )
+    .addStringOption(option =>
+        option.setName("reason")
+        .setDescription("Reason for unmuting")
+        .setRequired(false)
+    ),
 ].map(command => command.toJSON());
 
 const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN_ID || '');
