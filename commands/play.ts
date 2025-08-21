@@ -1,6 +1,7 @@
 import type { ChatInputCommandInteraction, GuildMember } from "discord.js";
 import { distube } from "../dcbot";
 import { getVoiceConnection } from "@discordjs/voice";
+import { searchYouTube, isYouTubeUrl, isSpotifyUrl, isSoundCloudUrl } from "../api/youtube";
 
 
 export default async function handlePlay(interaction: ChatInputCommandInteraction) {
@@ -19,27 +20,49 @@ export default async function handlePlay(interaction: ChatInputCommandInteractio
         }
 
         const query = interaction.options.getString("query", true).trim();
+        
+        if (!query) {
+            return await interaction.editReply("Please provide a song name, YouTube URL, or Spotify URL.");
+        }
+
         // Check if the interaction is in a text channel
         if (!interaction.channel || interaction.channel.type !== 0) {
             return await interaction.editReply("This command can only be used in a text channel within a server.");
         }
         
-        // Query only works with YouTube links/spotify links
-        if(!query.startsWith("http") && !query.startsWith("https")) {
-            return await interaction.editReply("Please provide a valid YouTube link or search query.");
+        let playUrl = query;
+        let searchMessage = "";
+
+        // Check if it's a direct URL (YouTube, Spotify, SoundCloud)
+        if (isYouTubeUrl(query) || isSpotifyUrl(query) || isSoundCloudUrl(query)) {
+            playUrl = query;
+            searchMessage = `▶️ Playing: **${query}** 🎶`;
+        } else {
+            // It's a search query, try to find on YouTube
+            await interaction.editReply("🔍 Searching YouTube...");
+            const youtubeUrl = await searchYouTube(query);
+            
+            if (!youtubeUrl) {
+                return await interaction.editReply("❌ No results found on YouTube for your search. Try a more specific query or provide a direct URL.");
+            }
+            
+            playUrl = youtubeUrl;
+            searchMessage = `✅ Found and playing: **${query} 🎶**`;
         }
-        // If the user is already in a voice channel, play the song
+
+        // Destroy any existing connection not managed by DisTube
         const connection = getVoiceConnection(voiceChannel.guild.id);
         if(connection) {
             connection.destroy();
         }
-        await distube.play(voiceChannel, query, {
+
+        await distube.play(voiceChannel, playUrl, {
             member,
             textChannel: interaction.channel,
             metadata: interaction
         });
 
-        return await interaction.editReply(`Searching and playing for: **${query}**`);
+        return await interaction.editReply(searchMessage);
 
     } catch (error: any) {
         console.error("Error in handlePlay:\n", error);
