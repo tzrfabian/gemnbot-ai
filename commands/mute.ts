@@ -50,7 +50,7 @@ export default async function handleMute(interaction: ChatInputCommandInteractio
             await targetMember.timeout(timeoutDuration, reason);
         } catch (timeoutError) {
             console.error("Failed to mute user:", timeoutError);
-            return await interaction.editReply("❌ Failed to mute the user. Check bot permissions.");
+            return await interaction.editReply("❌ Failed to mute the user. Check bot permissions or maybe user have moderation roles.");
         }
 
         const durationText = duration === 1 ? "1 minute" : `${duration} minutes`;
