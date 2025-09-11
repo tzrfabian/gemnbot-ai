@@ -13,6 +13,7 @@ import handleStop from "./commands/stop";
 import handleResume from "./commands/resume";
 import handleMute from "./commands/mute";
 import handleUnmute from "./commands/unmute";
+import handleRename from "./commands/rename";
 
 config();
 
@@ -20,6 +21,7 @@ export const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.GuildMembers,
         GatewayIntentBits.MessageContent,
         GatewayIntentBits.GuildVoiceStates
     ]
@@ -131,6 +133,9 @@ client.on("interactionCreate", async (interaction) => {
             break;
         case "unmute":
             await handleUnmute(interaction);
+            break;
+        case "rename":
+            await handleRename(interaction);
             break;
         default:
             await interaction.reply("Unknown command.");

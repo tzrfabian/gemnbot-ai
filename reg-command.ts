@@ -69,6 +69,14 @@ const commands = [
         .setDescription("Reason for unmuting")
         .setRequired(false)
     ),
+    new SlashCommandBuilder()
+    .setName("rename")
+    .setDescription("Renames/update your server nickname")
+    .addStringOption(option =>
+        option.setName("nickname")
+        .setDescription("Your new nickname")
+        .setRequired(true)
+    )
 ].map(command => command.toJSON());
 
 const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN_ID || '');
