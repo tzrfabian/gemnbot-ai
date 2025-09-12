@@ -71,11 +71,16 @@ const commands = [
     ),
     new SlashCommandBuilder()
     .setName("rename")
-    .setDescription("Renames/update your server nickname")
+    .setDescription("Renames/update your server nickname or another member's nickname (if you have permissions)")
     .addStringOption(option =>
         option.setName("nickname")
-        .setDescription("Your new nickname")
+        .setDescription("The new nickname")
         .setRequired(true)
+    )
+    .addUserOption(option =>
+        option.setName("user")
+        .setDescription("The user to rename (optional - leave empty to rename yourself)")
+        .setRequired(false)
     )
 ].map(command => command.toJSON());
 
