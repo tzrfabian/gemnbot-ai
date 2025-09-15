@@ -14,6 +14,9 @@ const commands = [
         .setRequired(true)
     ),
     new SlashCommandBuilder()
+    .setName("kata-kata hari ini")
+    .setDescription("Ask to bot to give you kata-kata hari ini"),
+    new SlashCommandBuilder()
     .setName("connect")
     .setDescription("Connects to your voice channel"),
     new SlashCommandBuilder()
