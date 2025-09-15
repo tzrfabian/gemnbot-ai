@@ -23,7 +23,7 @@ export async function askGeminiMotivation(): Promise<string> {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
-            contents: [{parts: [{text: `Berikan saya kata-kata motivasi hari ini. Hasilnya tidak lebih dari 2000 karakter.`}]}],
+            contents: [{parts: [{text: `Berikan saya kata-kata motivasi hari ini, langsung saja. Hasilnya tidak lebih dari 2000 karakter.`}]}],
         })
     });
 

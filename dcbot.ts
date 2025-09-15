@@ -113,7 +113,7 @@ client.on("interactionCreate", async (interaction) => {
         case "connect":
             await handleConnect(interaction);
             break;
-        case "kata-kata hari ini":
+        case "kata-kata-hari-ini":
             await handleAskMotivation(interaction);
             break;
         case "play":
