@@ -1,5 +1,5 @@
 import type { ChatInputCommandInteraction } from "discord.js";
-import { askGemini } from "../api/gemini";
+import { askGemini, askGeminiMotivation } from "../api/gemini";
 
 export default async function handleAsk(interaction: ChatInputCommandInteraction) {
     try {
@@ -20,6 +20,21 @@ export default async function handleAsk(interaction: ChatInputCommandInteraction
         // await interaction.editReply(response);
     } catch (error) {
         console.error("Error handling ask command:", error);
+        try {
+            await interaction.editReply("An error occurred while processing your request.");
+        } catch (err) {
+            console.error("Failed to edit reply (interaction may be expired):", err);
+        }
+    }
+}
+
+export async function handleAskMotivation(interaction: ChatInputCommandInteraction) {
+    try {
+        await interaction.deferReply();
+        const motivation = await askGeminiMotivation();
+        await interaction.editReply(motivation);
+    } catch (error) {
+        console.error("Error handling ask motivation command:", error);
         try {
             await interaction.editReply("An error occurred while processing your request.");
         } catch (err) {
