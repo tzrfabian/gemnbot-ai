@@ -1,152 +1,455 @@
-# Gemnbot-ai
+# 🤖 GemnBot AI - Advanced Discord Bot
 
-### Tech Stack
+A powerful, feature-rich Discord bot built with modern technologies, offering AI assistance, music streaming, and server moderation capabilities.
 
-- <img src="https://bun.sh/logo.svg" alt="Bun Logo" width="24" height="24" style="vertical-align:middle;"> **Bun**: JavaScript runtime for fast, modern development.
-- <img src="https://elysiajs.com/assets/elysia.svg" alt="Elysia Logo" width="24" height="24" style="vertical-align:middle;"> **Elysia**: Fast, modern web framework for building APIs with Bun.
-- <img src="https://www.svgrepo.com/show/374146/typescript-official.svg" alt="Elysia Logo" width="24" height="24" style="vertical-align:middle;"> **TypeScript**: Strongly typed programming language that builds on JavaScript.
+## 📋 Table of Contents
 
-## Documentation
+- [🚀 Features](#features)
+- [🛠️ Tech Stack](#tech-stack)
+- [📁 Project Structure](#project-structure)
+- [⚙️ Environment Setup](#environment-setup)
+- [🏃‍♂️ Quick Start](#quick-start)
+- [🎵 Music Commands](#music-commands)
+- [🤖 AI Commands](#ai-commands)
+- [👮‍♂️ Moderation Commands](#moderation-commands)
+- [🔧 Utility Commands](#utility-commands)
+- [🌐 Web API Endpoints](#web-api-endpoints)
+- [🚀 Deployment Guide](#deployment-guide)
+- [🔧 Development](#development)
+- [📝 Contributing](#contributing)
 
+## Features
 
-### Project Structure
+### 🎵 **Music Streaming**
+- **Multi-platform support**: YouTube, Spotify, SoundCloud
+- **Smart search**: Automatic YouTube search for song titles
+- **Queue management**: Play, pause, resume, stop functionality
+- **Voice channel management**: Auto-connect and disconnect
 
-- `index.ts`: Main entry point of the application.
-- `README.md`: Project documentation.
-- `package.json`: Project metadata and scripts.
-- Other source files and configuration as needed.
+### 🤖 **AI Assistant**
+- **Gemini AI Integration**: Powered by Google's Gemini 2.0 Flash
+- **Natural language processing**: Ask questions and get intelligent responses
+- **Daily motivation**: Indonesian motivational quotes feature (`kata-kata-hari-ini`)
+- **Response optimization**: Automatic 2000 character limit for Discord compatibility
 
-### Usage
+### 👮‍♂️ **Server Moderation**
+- **Timeout system**: Mute users with customizable duration (1-40320 minutes)
+- **Permission management**: Role hierarchy and permission validation
+- **Nickname management**: Self and admin nickname changing
+- **Comprehensive error handling**: Robust interaction management
 
-1. **Install dependencies**  
-    Run `bun install` to install all required packages.
+### 🌐 **Web API**
+- **RESTful endpoints**: HTTP API for external integrations
+- **Real-time messaging**: Send messages via web requests
+- **AI query endpoint**: Access AI features via HTTP
 
-2. **Run the project**  
-    Use `bun run index.ts` to start the application.
-    Or
-    Use `bun --hot run index.ts` to running & do live updates when you doing changes.
+## Tech Stack
 
-### Requirements
+- <img src="https://bun.sh/logo.svg" alt="Bun Logo" width="24" height="24" style="vertical-align:middle;"> **Bun**: Ultra-fast JavaScript runtime and package manager
+- <img src="https://elysiajs.com/assets/elysia.svg" alt="Elysia Logo" width="24" height="24" style="vertical-align:middle;"> **Elysia**: High-performance web framework for Bun
+- <img src="https://www.svgrepo.com/show/374146/typescript-official.svg" alt="TypeScript Logo" width="24" height="24" style="vertical-align:middle;"> **TypeScript**: Type-safe JavaScript with enhanced developer experience
+- **Discord.js v14**: Latest Discord API wrapper with full feature support
+- **DisTube**: Advanced music bot framework with multi-platform support
+- **Google Gemini AI**: State-of-the-art AI language model
 
-- **Bun** v1.2.4 or later ([bun.sh](https://bun.sh))
-- **Elysia** (included as a dependency)
-- **TypeScript** (included as a dependency)
+## Project Structure
 
+```
+gemnbot-ai/
+├── 📁 api/                    # External API integrations
+│   ├── gemini.ts             # Google Gemini AI API client
+│   └── youtube.ts            # YouTube search functionality
+├── 📁 commands/              # Discord slash commands
+│   ├── ask.ts               # AI question & motivation commands
+│   ├── connect.ts           # Voice channel connection
+│   ├── disconnect.ts        # Voice channel disconnection
+│   ├── mute.ts             # User timeout/mute functionality
+│   ├── unmute.ts           # User unmute functionality
+│   ├── pause.ts            # Music pause control
+│   ├── play.ts             # Music playback with search
+│   ├── rename.ts           # Nickname management
+│   ├── resume.ts           # Music resume control
+│   └── stop.ts             # Music stop control
+├── dcbot.ts                 # Core Discord bot logic & event handlers
+├── index.ts                 # Application entry point
+├── server.ts               # Elysia web server & API routes
+├── reg-command.ts          # Slash command registration utility
+├── package.json            # Dependencies & project metadata
+└── tsconfig.json           # TypeScript configuration
+```
 
-# Command Instruction
+## Environment Setup
+
+Create a `.env` file in the root directory with the following variables:
+
+```env
+# Discord Bot Configuration
+DISCORD_TOKEN_ID=your_discord_bot_token
+DISCORD_CLIENT_ID=your_discord_application_id
+DISCORD_CHANNEL_ID=default_channel_id_for_messages
+
+# Spotify Integration (Optional - for Spotify URL support)
+SPOTIFY_CLIENT_ID=your_spotify_client_id
+SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
+
+# Google Gemini AI
+GEMINI_API_KEY=your_gemini_api_key
+```
+
+### Getting API Keys
+
+1. **Discord Bot Token**:
+   - Visit [Discord Developer Portal](https://discord.com/developers/applications)
+   - Create new application → Bot → Copy token
+
+2. **Spotify Credentials** (Optional):
+   - Visit [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
+   - Create app → Copy Client ID & Secret
+
+3. **Gemini API Key**:
+   - Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
+   - Generate API key
+
+## Quick Start
+
+1. **Install Bun** (if not already installed):
+   ```bash
+   curl -fsSL https://bun.sh/install | bash
+   ```
+
+2. **Clone and setup**:
+   ```bash
+   git clone <your-repository-url>
+   cd gemnbot-ai
+   bun install
+   ```
+
+3. **Configure environment**:
+   ```bash
+   cp .env.example .env
+   # Edit .env with your API keys
+   ```
+
+4. **Register Discord commands**:
+   ```bash
+   bun run reg-command.ts
+   ```
+
+5. **Start the bot**:
+   ```bash
+   # Production
+   bun run index.ts
+   
+   # Development (with hot reload)
+   bun --hot run index.ts
+   ```
+
 
 ## Music Commands
 
-### Play Command Usage
+### `/play <query>`
+**Play music from multiple sources**
 
-The `/play` command now supports both song titles and direct URLs:
+**Supported Input Types:**
+- **Song titles**: `never gonna give you up`, `imagine dragons believer`
+- **YouTube URLs**: `https://www.youtube.com/watch?v=dQw4w9WgXcQ`
+- **Spotify URLs**: `https://open.spotify.com/track/4iV5W9uYEdYUVa79Axb7Rh`
+- **SoundCloud URLs**: `https://soundcloud.com/artist/track`
 
-#### Supported Formats:
+**Features:**
+- 🔍 Automatic YouTube search for song titles
+- ✅ Direct URL playback support
+- 🎵 Queue management with DisTube
+- ⚡ Fast response with search status updates
 
-##### 1. Song Title Search
-- `/play never gonna give you up`
-- `/play imagine dragons believer`
-- `/play taylor swift shake it off`
+### Other Music Controls
+- `/pause` - Pause current playback
+- `/resume` - Resume paused music
+- `/stop` - Stop music and clear queue
+- `/connect` - Connect to your voice channel
+- `/disconnect` - Leave voice channel
 
-The bot will automatically search YouTube and play the first result.
-
-##### 2. Direct URLs
-- **YouTube**: `/play https://www.youtube.com/watch?v=dQw4w9WgXcQ`
-- **Spotify**: `/play https://open.spotify.com/track/4iV5W9uYEdYUVa79Axb7Rh`
-- **SoundCloud**: `/play https://soundcloud.com/artist/track`
-
-#### How it works:
-1. If you provide a URL, the bot plays it directly
-2. If you provide a song title, the bot:
-   - Shows "🔍 Searching YouTube..."
-   - Uses YouTube Data API to find the best match
-   - Plays the found video
-
-#### Requirements:
-- You must be in a voice channel
-- The bot needs YouTube Data API access (already configured)
-- Supports Spotify and SoundCloud links through DisTube plugins
-
-#### Error Handling:
-- If no results found: "❌ No results found on YouTube for your search"
-- If API fails: Falls back to error message with suggestion to use direct URL
-- All interaction timeouts are properly handled
-
-### Other Music Commands:
-- `/pause` - Pause current song
-- `/resume` - Resume paused song
-- `/stop` - Stop music and leave voice channel
-- `/connect` - Connect bot to your voice channel
-- `/disconnect` - Disconnect bot from voice channel
-
-## Moderation Commands
-
-### Mute/Unmute Commands
-
-#### Command Usage:
-
-##### Mute Command:
-```
-/mute user:@username duration:10 reason:spamming
-```
-- **user**: Required - The user to mute
-- **duration**: Optional - Minutes (1-40320, default: 10)
-- **reason**: Optional - Reason for muting
-
-##### Unmute Command:
-```
-/unmute user:@username reason:appeal accepted
-```
-- **user**: Required - The user to unmute  
-- **reason**: Optional - Reason for unmuting
-
-#### Bot Permissions Required:
-
-Make sure your bot has these permissions in Discord:
-- ✅ **Moderate Members** (required for timeout/mute)
-- ✅ **Send Messages**
-- ✅ **Use Slash Commands**
-- ✅ **View Channels**
-
-#### Permission Requirements:
-- Bot's role must be higher than the user being muted
-- Bot cannot mute server admins/owners
-- User executing command must have "Moderate Members" permission
-
-#### Error Handling & Troubleshooting:
-
-All interaction timeout errors have been fixed with:
-- ✅ Proper try-catch blocks around Discord API calls
-- ✅ Improved interaction timeout handling
-- ✅ Better member fetching using `fetch()` instead of cache
-- ✅ Enhanced permission validation
-- ✅ Safer interaction responses with state checking
-
-#### Common Issues & Solutions:
-
-##### "Unknown interaction" Error:
-✅ **Fixed** - Added proper error handling and interaction state checking
-
-##### "InteractionNotReplied" Error:
-✅ **Fixed** - Added checks for interaction state before responding
-
-##### "User not found" Error:
-✅ **Fixed** - Now uses `fetch()` instead of cache for better reliability
-
-##### Permission Errors:
-- Ensure bot has "Moderate Members" permission
-- Check bot role hierarchy (must be above target user)
-- Verify user permissions for command execution
+**Requirements:**
+- Must be in a voice channel
+- Bot needs voice channel permissions
+- YouTube Data API access (configured automatically)
 
 ## AI Commands
 
-### Ask Command:
-- `/ask` - Ask questions to the AI assistant powered by Gemini API
-- Supports natural language queries and provides intelligent responses
-- Includes proper error handling for API timeouts
+### `/ask <prompt>`
+**Ask questions to Gemini AI assistant**
 
-### Contributing
+**Examples:**
+```
+/ask What is the capital of France?
+/ask Explain quantum computing in simple terms
+/ask Write a Python function to sort a list
+```
 
-1. Fork the repository.
-2. Create a new branch for your feature or fix.
-3. Submit a pull request with a clear description.
+**Features:**
+- 🧠 Powered by Google Gemini 2.0 Flash
+- 📝 Intelligent responses with context awareness
+- 🎯 Optimized for Discord (2000 character limit)
+- 👤 Shows username in response format
+
+### `/kata-kata-hari-ini`
+**Get daily motivational quotes in Indonesian**
+
+**Features:**
+- 🌅 Daily inspiration in Indonesian language
+- 💪 Motivational content generation
+- 🎯 Culturally relevant quotes
+
+## Moderation Commands
+
+### `/mute <user> [duration] [reason]`
+**Temporarily mute users with timeout**
+
+**Parameters:**
+- `user`: **Required** - User to mute (@username)
+- `duration`: **Optional** - Minutes (1-40320, default: 10)
+- `reason`: **Optional** - Reason for muting
+
+**Examples:**
+```
+/mute user:@username duration:30 reason:spamming
+/mute user:@troublemaker duration:60
+/mute user:@user
+```
+
+### `/unmute <user> [reason]`
+**Remove timeout from users**
+
+**Parameters:**
+- `user`: **Required** - User to unmute
+- `reason`: **Optional** - Reason for unmuting
+
+**Permission Requirements:**
+- ✅ **Moderate Members** permission required
+- ✅ Bot role must be higher than target user
+- ✅ Cannot mute server administrators/owners
+- ✅ Proper role hierarchy validation
+
+## Utility Commands
+
+### `/rename <nickname> [user]`
+**Change server nicknames**
+
+**Self-rename:**
+```
+/rename nickname:"New Nickname"
+```
+
+**Admin rename (requires permissions):**
+```
+/rename nickname:"New Name" user:@target_user
+```
+
+**Permission Requirements:**
+- **Self-rename**: No special permissions needed
+- **Admin rename**: `ManageNicknames` permission or moderator role
+- **Role hierarchy**: Cannot rename users with equal/higher roles
+
+**Features:**
+- 🔒 Comprehensive permission validation
+- 📏 32-character nickname limit enforcement
+- 👑 Server owner protection
+- 🛡️ Role hierarchy respect
+
+### `/ping`
+**Simple connectivity test**
+- Returns "Pong!" to verify bot responsiveness
+
+## Web API Endpoints
+
+The bot includes an HTTP API server running on port 3000:
+
+### `GET /`
+**Health check endpoint**
+```
+Response: "DCBot is running with Elysia!"
+```
+
+### `GET /send/:message`
+**Send message to default channel**
+```bash
+curl http://localhost:3000/send/Hello%20World
+```
+
+### `GET /ai/:prompt`
+**Query Gemini AI via HTTP**
+```bash
+curl http://localhost:3000/ai/What%20is%20TypeScript
+```
+
+### `GET /ai/ask/:motivation`
+**Get motivational quote via HTTP**
+```bash
+curl http://localhost:3000/ai/ask/motivation
+```
+
+## Deployment Guide
+
+### 🚄 Railway (Recommended)
+**Fast and easy deployment**
+
+1. Create `railway.toml`:
+   ```toml
+   [build]
+   builder = "nixpacks"
+   
+   [deploy]
+   startCommand = "bun run index.ts"
+   ```
+
+2. Connect GitHub repository to Railway
+3. Set environment variables in Railway dashboard
+4. Deploy automatically on push
+
+### 🐳 Docker Deployment
+**Containerized deployment**
+
+1. Create `Dockerfile`:
+   ```dockerfile
+   FROM oven/bun:1
+   
+   WORKDIR /app
+   COPY package.json bun.lock* ./
+   RUN bun install --frozen-lockfile
+   
+   COPY . .
+   EXPOSE 3000
+   
+   CMD ["bun", "run", "index.ts"]
+   ```
+
+2. Build and run:
+   ```bash
+   docker build -t gemnbot-ai .
+   docker run -d --env-file .env -p 3000:3000 gemnbot-ai
+   ```
+
+### 🖥️ VPS Deployment
+**Traditional server deployment**
+
+1. **Install Bun on server**:
+   ```bash
+   curl -fsSL https://bun.sh/install | bash
+   ```
+
+2. **Setup application**:
+   ```bash
+   git clone <repository>
+   cd gemnbot-ai
+   bun install
+   ```
+
+3. **Create systemd service** (`/etc/systemd/system/gemnbot.service`):
+   ```ini
+   [Unit]
+   Description=GemnBot AI Discord Bot
+   After=network.target
+   
+   [Service]
+   Type=simple
+   User=your-user
+   WorkingDirectory=/path/to/gemnbot-ai
+   ExecStart=/home/your-user/.bun/bin/bun run index.ts
+   Restart=always
+   RestartSec=10
+   Environment=NODE_ENV=production
+   
+   [Install]
+   WantedBy=multi-user.target
+   ```
+
+4. **Start service**:
+   ```bash
+   sudo systemctl enable gemnbot
+   sudo systemctl start gemnbot
+   ```
+
+### ☁️ Other Platforms
+- **Heroku**: Add `Procfile` with `web: bun run index.ts`
+- **DigitalOcean App Platform**: Use `app.yaml` configuration
+- **Vercel**: Configure for serverless deployment
+- **AWS/GCP**: Use container services or compute instances
+
+## Development
+
+### 🏃‍♂️ **Development Mode**
+```bash
+# Hot reload during development
+bun --hot run index.ts
+
+# Register new commands during development
+bun run reg-command.ts
+```
+
+### 🧪 **Testing Commands**
+1. Invite bot to test server with proper permissions
+2. Run `/ping` to verify connectivity
+3. Test each command category systematically
+4. Monitor console logs for errors
+
+### 📊 **Monitoring & Debugging**
+- Console logs for all major operations
+- Error handling with user-friendly messages
+- Interaction timeout protection
+- API rate limit awareness
+
+### 🔄 **Adding New Commands**
+1. Create command handler in `commands/` directory
+2. Add command definition in `reg-command.ts`
+3. Register command in `dcbot.ts` interaction handler
+4. Run `bun run reg-command.ts` to update Discord
+
+## Contributing
+
+### 🤝 **How to Contribute**
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
+3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
+4. **Push** to the branch (`git push origin feature/amazing-feature`)
+5. **Open** a Pull Request
+
+### 📋 **Contribution Guidelines**
+- Follow TypeScript best practices
+- Add proper error handling
+- Include JSDoc comments for new functions
+- Test all Discord interactions thoroughly
+- Update README for new features
+
+### 🐛 **Bug Reports**
+- Use GitHub Issues with detailed descriptions
+- Include error logs and reproduction steps
+- Specify environment details (OS, Bun version, etc.)
+
+### ✨ **Feature Requests**
+- Open GitHub Issues with feature proposals
+- Explain use cases and expected behavior
+- Consider implementation complexity
+
+---
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## Acknowledgments
+
+- **Discord.js** community for excellent documentation
+- **Bun** team for the amazing runtime
+- **Google** for Gemini AI API access
+- **DisTube** for music bot capabilities
+- All contributors and users of this bot
+
+---
+
+<div align="center">
+
+**Made with ❤️ and TypeScript**
+
+[⭐ Star this repo](https://github.com/your-username/gemnbot-ai) • [🐛 Report Bug](https://github.com/your-username/gemnbot-ai/issues) • [💡 Request Feature](https://github.com/your-username/gemnbot-ai/issues)
+
+</div>
