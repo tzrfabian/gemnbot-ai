@@ -1,5 +1,5 @@
 import { Client, GatewayIntentBits, TextChannel } from "discord.js";
-import handleAsk from "./commands/ask";
+import handleAsk, { handleAskMotivation } from "./commands/ask";
 import handleConnect from "./commands/connect";
 import handleDisconnect from "./commands/disconnect";
 import handlePlay from "./commands/play";
@@ -112,6 +112,9 @@ client.on("interactionCreate", async (interaction) => {
             break;
         case "connect":
             await handleConnect(interaction);
+            break;
+        case "kata-kata-hari-ini":
+            await handleAskMotivation(interaction);
             break;
         case "play":
             await handlePlay(interaction);

@@ -16,6 +16,11 @@ app.get("/ai/:prompt", async ({ params }) => {
     return { prompt: params.prompt, Response: reply };
 });
 
+app.get("/ai/ask/:motivation", async ({ params }) => {
+    const reply = await askGemini(params.motivation);
+    return { motivation: params.motivation, Response: reply };
+})
+
 app.listen(3000, () => {
     console.log("Server is running on http://localhost:3000");
 });
