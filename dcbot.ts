@@ -14,6 +14,7 @@ import handleResume from "./commands/resume";
 import handleMute from "./commands/mute";
 import handleUnmute from "./commands/unmute";
 import handleRename from "./commands/rename";
+import { Logger } from "./utility/logger";
 
 config();
 
@@ -103,46 +104,173 @@ distube
 client.on("interactionCreate", async (interaction) => {
     if(!interaction.isChatInputCommand()) return;
 
-    switch (interaction.commandName) {
-        case "ping":
-            await interaction.reply("Pong!");
-            break;
-        case "ask":
-            await handleAsk(interaction);
-            break;
-        case "connect":
-            await handleConnect(interaction);
-            break;
-        case "kata-kata-hari-ini":
-            await handleAskMotivation(interaction);
-            break;
-        case "play":
-            await handlePlay(interaction);
-            break;
-        case "pause":
-            await handlePause(interaction);
-            break;
-        case "stop":
-            await handleStop(interaction);
-            break;
-        case "resume":
-            await handleResume(interaction);
-            break;
-        case "disconnect":
-            await handleDisconnect(interaction);
-            break;
-        case "mute":
-            await handleMute(interaction);
-            break;
-        case "unmute":
-            await handleUnmute(interaction);
-            break;
-        case "rename":
-            await handleRename(interaction);
-            break;
-        default:
-            await interaction.reply("Unknown command.");
-            break;
+    const { commandName, user, guildId, channelId } = interaction;
+    const {username, id: userId} = user;
+    Logger.commandStart(commandName, username, userId, guildId || "", {
+        channelId,
+        options: interaction.options.data.map(option => ({
+            name: option.name,
+            value: option.value
+        }))
+    });
+
+    try {
+        switch (interaction.commandName) {
+            case "ping":
+                await interaction.reply("Pong!");
+                Logger.commandSuccess(commandName, username, userId, guildId || "", {
+                    channelId,
+                    options: interaction.options.data.map(option => ({
+                        name: option.name,
+                        value: option.value
+                    }))
+                });
+                break;
+            case "ask":
+                await handleAsk(interaction);
+                Logger.commandSuccess(commandName, username, userId, guildId || "", {
+                    channelId,
+                    options: interaction.options.data.map(option => ({
+                        name: option.name,
+                        value: option.value
+                    }))
+                });
+                break;
+            case "connect":
+                await handleConnect(interaction);
+                Logger.commandSuccess(commandName, username, userId, guildId || "", {
+                    channelId,
+                    options: interaction.options.data.map(option => ({
+                        name: option.name,
+                        value: option.value
+                    }))
+                });
+                break;
+            case "kata-kata-hari-ini":
+                await handleAskMotivation(interaction);
+                Logger.commandSuccess(commandName, username, userId, guildId || "", {
+                    channelId,
+                    options: interaction.options.data.map(option => ({
+                        name: option.name,
+                        value: option.value
+                    }))
+                });
+                break;
+            case "play":
+                await handlePlay(interaction);
+                Logger.commandSuccess(commandName, username, userId, guildId || "", {
+                    channelId,
+                    options: interaction.options.data.map(option => ({
+                        name: option.name,
+                        value: option.value
+                    }))
+                });
+                break;
+            case "pause":
+                await handlePause(interaction);
+                Logger.commandSuccess(commandName, username, userId, guildId || "", {
+                    channelId,
+                    options: interaction.options.data.map(option => ({
+                        name: option.name,
+                        value: option.value
+                    }))
+                });
+                break;
+            case "stop":
+                await handleStop(interaction);
+                Logger.commandSuccess(commandName, username, userId, guildId || "", {
+                    channelId,
+                    options: interaction.options.data.map(option => ({
+                        name: option.name,
+                        value: option.value
+                    }))
+                });
+                break;
+            case "resume":
+                await handleResume(interaction);
+                Logger.commandSuccess(commandName, username, userId, guildId || "", {
+                    channelId,
+                    options: interaction.options.data.map(option => ({
+                        name: option.name,
+                        value: option.value
+                    }))
+                });
+                break;
+            case "disconnect":
+                await handleDisconnect(interaction);
+                Logger.commandSuccess(commandName, username, userId, guildId || "", {
+                    channelId,
+                    options: interaction.options.data.map(option => ({
+                        name: option.name,
+                        value: option.value
+                    }))
+                });
+                break;
+            case "mute":
+                await handleMute(interaction);
+                Logger.commandSuccess(commandName, username, userId, guildId || "", {
+                    channelId,
+                    options: interaction.options.data.map(option => ({
+                        name: option.name,
+                        value: option.value
+                    }))
+                });
+                break;
+            case "unmute":
+                await handleUnmute(interaction);
+                Logger.commandSuccess(commandName, username, userId, guildId || "", {
+                    channelId,
+                    options: interaction.options.data.map(option => ({
+                        name: option.name,
+                        value: option.value
+                    }))
+                });
+                break;
+            case "rename":
+                await handleRename(interaction);
+                Logger.commandSuccess(commandName, username, userId, guildId || "", {
+                    channelId,
+                    options: interaction.options.data.map(option => ({
+                        name: option.name,
+                        value: option.value
+                    }))
+                });
+                break;
+            default:
+                Logger.warn('Unknown command received', {
+                    commandName,
+                    username,
+                    userId,
+                    guildId: guildId || undefined,
+                });
+                await interaction.reply("Unknown command.");
+                break;
+        }
+    } catch (error) {
+        Logger.commandError(commandName, username, userId, guildId || "", error as Error, {
+            channelId,
+            options: interaction.options.data.map(option => ({
+                name: option.name,
+                value: option.value
+            }))
+        });
+
+        try {
+            const errorMessage = "An error occurred while processing your request.";
+            if(interaction.deferred || interaction.replied) {
+                await interaction.editReply(errorMessage);
+            } else {
+                await interaction.reply(errorMessage);
+            }
+        } catch (replyError) {
+            Logger.error(`Failed to send error message`, {
+                commandName,
+                username,
+                userId,
+                guildId: guildId || "",
+                error: (replyError as Error).message
+            });
+        }
     }
 });
 
