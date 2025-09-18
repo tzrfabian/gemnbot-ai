@@ -1,7 +1,7 @@
 import { getVoiceConnection, joinVoiceChannel } from "@discordjs/voice";
 import type { ChatInputCommandInteraction, GuildMember } from "discord.js";
 
-export default async function handleConnect(interaction: ChatInputCommandInteraction) {
+export default async function handleJoin(interaction: ChatInputCommandInteraction) {
     try {
         await interaction.deferReply();
 
