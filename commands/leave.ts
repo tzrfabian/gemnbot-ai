@@ -2,7 +2,7 @@ import { getVoiceConnection } from "@discordjs/voice";
 import type { ChatInputCommandInteraction } from "discord.js";
 import { distube } from "../dcbot";
 
-export default async function handleDisconnect(interaction: ChatInputCommandInteraction) {
+export default async function handleLeave(interaction: ChatInputCommandInteraction) {
     try {
         await interaction.deferReply();
 

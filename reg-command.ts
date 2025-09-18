@@ -17,7 +17,7 @@ const commands = [
     .setName("kata-kata-hari-ini")
     .setDescription("Ask to bot to give you kata-kata hari ini"),
     new SlashCommandBuilder()
-    .setName("connect")
+    .setName("join")
     .setDescription("Connects to your voice channel"),
     new SlashCommandBuilder()
     .setName("play")
@@ -37,7 +37,7 @@ const commands = [
     .setName("resume")
     .setDescription("Resumes the paused song"),
     new SlashCommandBuilder()
-    .setName("disconnect")
+    .setName("leave")
     .setDescription("Disconnects from the voice channel"),
     new SlashCommandBuilder()
     .setName("mute")

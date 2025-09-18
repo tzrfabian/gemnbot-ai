@@ -1,7 +1,7 @@
 import { Client, GatewayIntentBits, TextChannel } from "discord.js";
 import handleAsk, { handleAskMotivation } from "./commands/ask";
-import handleConnect from "./commands/connect";
-import handleDisconnect from "./commands/disconnect";
+import handleJoin from "./commands/join";
+import handleLeave from "./commands/leave";
 import handlePlay from "./commands/play";
 import { DisTube, Queue, Song, type DisTubeEvents} from "distube";
 import SpotifyPlugin from "@distube/spotify";
@@ -135,8 +135,8 @@ client.on("interactionCreate", async (interaction) => {
                     }))
                 });
                 break;
-            case "connect":
-                await handleConnect(interaction);
+            case "join":
+                await handleJoin(interaction);
                 Logger.commandSuccess(commandName, username, userId, guildId || "", {
                     channelId,
                     options: interaction.options.data.map(option => ({
@@ -195,8 +195,8 @@ client.on("interactionCreate", async (interaction) => {
                     }))
                 });
                 break;
-            case "disconnect":
-                await handleDisconnect(interaction);
+            case "leave":
+                await handleLeave(interaction);
                 Logger.commandSuccess(commandName, username, userId, guildId || "", {
                     channelId,
                     options: interaction.options.data.map(option => ({
