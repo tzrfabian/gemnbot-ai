@@ -5,7 +5,7 @@ import { distube } from "../dcbot";
 export default async function handlePause(interaction: ChatInputCommandInteraction) {
     try {
         await interaction.deferReply();
-        const queue = distube.getQueue(interaction.guildId!);
+        const queue = distube.getQueue(interaction.guild!.id);
         if(!queue) {
             return await interaction.editReply("There is no music playing in this server.");
         }
