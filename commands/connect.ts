@@ -5,18 +5,19 @@ export default async function handleConnect(interaction: ChatInputCommandInterac
     try {
         await interaction.deferReply();
 
-        if(!interaction.guild || !interaction.member || !("voice" in interaction.member)) {
+        if (!interaction.guild || !interaction.member || !("voice" in interaction.member)) {
             return await interaction.editReply("You must be in a voice channel to connect.");
         }
+
         const member = interaction.member as GuildMember;
         const voiceChannel = member.voice.channel;
 
-        if(!voiceChannel) {
+        if (!voiceChannel) {
             return await interaction.editReply("You must be in a voice channel to connect.");
         }
-        const existingConnection = getVoiceConnection(voiceChannel.guild.id);
-        if(existingConnection) {
-            if(existingConnection.joinConfig.channelId === voiceChannel.id) {
+        const existingConnection = getVoiceConnection(interaction.guild.id);
+        if (existingConnection) {
+            if (existingConnection.joinConfig.channelId === voiceChannel.id) {
                 return await interaction.editReply("Already connected to this voice channel.");
             }
             existingConnection.destroy();
@@ -25,7 +26,7 @@ export default async function handleConnect(interaction: ChatInputCommandInterac
 
         joinVoiceChannel({
             channelId: voiceChannel.id,
-            guildId:voiceChannel.guild.id,
+            guildId: interaction.guild.id,
             adapterCreator: voiceChannel.guild.voiceAdapterCreator,
         });
         await interaction.editReply(`Connected to voice channel: **${voiceChannel.name}**`);

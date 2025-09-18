@@ -7,7 +7,6 @@ import { DisTube, Queue, Song, type DisTubeEvents} from "distube";
 import SpotifyPlugin from "@distube/spotify";
 import { config } from "dotenv";
 import { YtDlpPlugin } from "@distube/yt-dlp";
-import { YouTubePlugin } from "@distube/youtube";
 import handlePause from "./commands/pause";
 import handleStop from "./commands/stop";
 import handleResume from "./commands/resume";
