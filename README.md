@@ -43,6 +43,13 @@ A powerful, feature-rich Discord bot built with modern technologies, offering AI
 - **Real-time messaging**: Send messages via web requests
 - **AI query endpoint**: Access AI features via HTTP
 
+### 📊 **Enhanced Logging System**
+- **Comprehensive command tracking**: Logs all command executions with timestamps
+- **User activity monitoring**: Tracks username, user ID, and guild information
+- **Success/Error status tracking**: Detailed logging of command outcomes
+- **Structured console output**: Enhanced readability with formatted log messages
+- **Real-time debugging**: Immediate feedback for development and troubleshooting
+
 ## Tech Stack
 
 - <img src="https://bun.sh/logo.svg" alt="Bun Logo" width="24" height="24" style="vertical-align:middle;"> **Bun**: Ultra-fast JavaScript runtime and package manager
@@ -51,6 +58,7 @@ A powerful, feature-rich Discord bot built with modern technologies, offering AI
 - **Discord.js v14**: Latest Discord API wrapper with full feature support
 - **DisTube**: Advanced music bot framework with multi-platform support
 - **Google Gemini AI**: State-of-the-art AI language model
+- **Custom Logger Utility**: Enhanced console logging with timestamps and command tracking
 
 ## Project Structure
 
@@ -61,8 +69,8 @@ gemnbot-ai/
 │   └── youtube.ts            # YouTube search functionality
 ├── 📁 commands/              # Discord slash commands
 │   ├── ask.ts               # AI question & motivation commands
-│   ├── connect.ts           # Voice channel connection
-│   ├── disconnect.ts        # Voice channel disconnection
+│   ├── join.ts              # Voice channel connection
+│   ├── leave.ts             # Voice channel disconnection
 │   ├── mute.ts             # User timeout/mute functionality
 │   ├── unmute.ts           # User unmute functionality
 │   ├── pause.ts            # Music pause control
@@ -70,6 +78,8 @@ gemnbot-ai/
 │   ├── rename.ts           # Nickname management
 │   ├── resume.ts           # Music resume control
 │   └── stop.ts             # Music stop control
+├── 📁 utility/               # Utility functions and helpers
+│   └── logger.ts            # Enhanced logging system with timestamps
 ├── dcbot.ts                 # Core Discord bot logic & event handlers
 ├── index.ts                 # Application entry point
 ├── server.ts               # Elysia web server & API routes
@@ -166,8 +176,8 @@ GEMINI_API_KEY=your_gemini_api_key
 - `/pause` - Pause current playback
 - `/resume` - Resume paused music
 - `/stop` - Stop music and clear queue
-- `/connect` - Connect to your voice channel
-- `/disconnect` - Leave voice channel
+- `/join` - Connect to your voice channel
+- `/leave` - Leave voice channel
 
 **Requirements:**
 - Must be in a voice channel
@@ -392,11 +402,23 @@ bun run reg-command.ts
 3. Test each command category systematically
 4. Monitor console logs for errors
 
-### 📊 **Monitoring & Debugging**
-- Console logs for all major operations
-- Error handling with user-friendly messages
-- Interaction timeout protection
-- API rate limit awareness
+### 📊 **Enhanced Logging & Monitoring**
+- **Comprehensive command tracking**: Every command execution is logged with detailed context
+- **Structured log format**: Timestamp, command name, user info, guild ID, and execution status
+- **Success/Error tracking**: Clear indication of command outcomes for debugging
+- **Real-time monitoring**: Live console output for development and production debugging
+- **User activity insights**: Track command usage patterns and user interactions
+
+**Example log output:**
+```
+[2024-01-15 14:30:25.123] [INFO] CMD:ask USER:JohnDoe(123456789) GUILD:987654321 STATUS:START - Command started
+[2024-01-15 14:30:27.456] [INFO] CMD:ask USER:JohnDoe(123456789) GUILD:987654321 STATUS:SUCCESS - Command completed successfully
+[2024-01-15 14:30:30.789] [ERROR] CMD:play USER:JaneSmith(987654321) GUILD:123456789 STATUS:ERROR - Command failed ERROR:Voice channel not found
+```
+
+- **Error handling**: User-friendly error messages with detailed logging
+- **Interaction timeout protection**: Robust handling of Discord API limitations
+- **API rate limit awareness**: Smart request management
 
 ### 🔄 **Adding New Commands**
 1. Create command handler in `commands/` directory
