@@ -7,6 +7,7 @@ import { DisTube, Queue, Song, type DisTubeEvents} from "distube";
 import SpotifyPlugin from "@distube/spotify";
 import { config } from "dotenv";
 import { YtDlpPlugin } from "@distube/yt-dlp";
+import { SoundCloudPlugin } from "@distube/soundcloud";
 import handlePause from "./commands/pause";
 import handleStop from "./commands/stop";
 import handleResume from "./commands/resume";
@@ -35,7 +36,10 @@ export const distube = new DisTube(client, {
                 clientSecret: process.env.SPOTIFY_CLIENT_SECRET || "",
             },
         }),
-        new YtDlpPlugin()
+        new SoundCloudPlugin(),
+        new YtDlpPlugin({
+            update: false
+        })
     ],
     emitNewSongOnly: true,
     joinNewVoiceChannel: true,
