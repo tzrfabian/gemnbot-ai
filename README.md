@@ -82,7 +82,6 @@ gemnbot-ai/
 │   └── logger.ts            # Enhanced logging system with timestamps
 ├── dcbot.ts                 # Core Discord bot logic & event handlers
 ├── index.ts                 # Application entry point
-├── server.ts               # Elysia web server & API routes
 ├── reg-command.ts          # Slash command registration utility
 ├── package.json            # Dependencies & project metadata
 └── tsconfig.json           # TypeScript configuration
@@ -272,12 +271,18 @@ GEMINI_API_KEY=your_gemini_api_key
 
 ## Web API Endpoints
 
-The bot includes an HTTP API server running on port 3000:
+The bot includes an HTTP API server running on port `PORT` (default `3000`):
 
 ### `GET /`
 **Health check endpoint**
 ```
-Response: "DCBot is running with Elysia!"
+Response (JSON example):
+{
+  "status": "Running",
+  "bot": "Gemnbot#1234",
+  "guilds": 3,
+  "uptime": 123.45
+}
 ```
 
 ### `GET /send/:message`
@@ -296,6 +301,25 @@ curl http://localhost:3000/ai/What%20is%20TypeScript
 **Get motivational quote via HTTP**
 ```bash
 curl http://localhost:3000/ai/ask/motivation
+```
+
+### `GET /api/stats`
+**Bot and system statistics**
+```
+Response (JSON example):
+{
+  "bot": {
+    "username": "Gemnbot#1234",
+    "id": "1234567890",
+    "guilds": 3,
+    "users": 42
+  },
+  "system": {
+    "uptime": 123.45,
+    "memory": { /* process.memoryUsage() */ },
+    "platform": "win32"
+  }
+}
 ```
 
 ## Deployment Guide
