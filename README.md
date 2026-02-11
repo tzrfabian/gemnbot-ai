@@ -93,9 +93,9 @@ Create a `.env` file in the root directory with the following variables:
 
 ```env
 # Discord Bot Configuration
-DISCORD_TOKEN_ID=your_discord_bot_token
+DISCORD_TOKEN_ID=your_discord_token_id
 DISCORD_CLIENT_ID=your_discord_application_id
-DISCORD_CHANNEL_ID=default_channel_id_for_messages
+DISCORD_CHANNEL_ID=your_default_channel_id_for_messages
 
 # Spotify Integration (Optional - for Spotify URL support)
 SPOTIFY_CLIENT_ID=your_spotify_client_id

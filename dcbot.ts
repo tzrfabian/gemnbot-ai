@@ -54,7 +54,7 @@ client.once("ready", () => {
     const defaultChannelId = process.env.DISCORD_CHANNEL_ID;
     // Find the default channel to send messages
     if (!defaultChannelId) {
-        console.warn("DEFAULT_CHANNEL_ID is not set in environment variables.");
+        console.warn("DISCORD_CHANNEL_ID is not set in environment variables.");
         return;
     }
     const channel = client.channels.cache.get(defaultChannelId) as TextChannel;
@@ -285,7 +285,7 @@ export const sendMessageToChannel = async (text: string) => {
 export const startBot = async () => {
     const token = process.env.DISCORD_TOKEN_ID;
     if (!token) {
-        throw new Error("DISCORD_BOT_TOKEN is not set in environment variables.");
+        throw new Error("DISCORD_TOKEN_ID is not set in environment variables.");
     }
     await client.login(token);
 };
