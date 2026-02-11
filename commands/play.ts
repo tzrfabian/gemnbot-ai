@@ -2,6 +2,7 @@ import type { ChatInputCommandInteraction, GuildMember } from "discord.js";
 import { distube } from "../dcbot";
 import { getVoiceConnection } from "@discordjs/voice";
 import { searchYouTube, getUrlType } from "../api/youtube";
+import { Logger } from "../utility/logger";
 
 
 export default async function handlePlay(interaction: ChatInputCommandInteraction) {
