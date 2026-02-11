@@ -27,7 +27,7 @@ A powerful, feature-rich Discord bot built with modern technologies, offering AI
 - **Voice channel management**: Auto-connect and disconnect
 
 ### 🤖 **AI Assistant**
-- **Gemini AI Integration**: Powered by Google's Gemini 2.0 Flash
+- **Gemini AI Integration**: Powered by Google's Gemini via the `@google/genai` SDK
 - **Natural language processing**: Ask questions and get intelligent responses
 - **Daily motivation**: Indonesian motivational quotes feature (`kata-kata-hari-ini`)
 - **Response optimization**: Automatic 2000 character limit for Discord compatibility
@@ -57,6 +57,7 @@ A powerful, feature-rich Discord bot built with modern technologies, offering AI
 - <img src="https://www.svgrepo.com/show/374146/typescript-official.svg" alt="TypeScript Logo" width="24" height="24" style="vertical-align:middle;"> **TypeScript**: Type-safe JavaScript with enhanced developer experience
 - **Discord.js v14**: Latest Discord API wrapper with full feature support
 - **DisTube**: Advanced music bot framework with multi-platform support
+- **Google GenAI SDK (`@google/genai`)**: Official Gemini API client
 - **Google Gemini AI**: State-of-the-art AI language model
 - **Custom Logger Utility**: Enhanced console logging with timestamps and command tracking
 
@@ -65,7 +66,7 @@ A powerful, feature-rich Discord bot built with modern technologies, offering AI
 ```
 gemnbot-ai/
 ├── 📁 api/                    # External API integrations
-│   ├── gemini.ts             # Google Gemini AI API client
+│   ├── gemini.ts             # Google Gemini API client (GenAI SDK)
 │   └── youtube.ts            # YouTube search functionality
 ├── 📁 commands/              # Discord slash commands
 │   ├── ask.ts               # AI question & motivation commands
@@ -83,6 +84,8 @@ gemnbot-ai/
 ├── dcbot.ts                 # Core Discord bot logic & event handlers
 ├── index.ts                 # Application entry point
 ├── reg-command.ts          # Slash command registration utility
+├── yt-search.d.ts           # YouTube search type definitions
+├── WARP.md                  # Project notes
 ├── package.json            # Dependencies & project metadata
 └── tsconfig.json           # TypeScript configuration
 ```
@@ -103,6 +106,9 @@ SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
 
 # Google Gemini AI
 GEMINI_API_KEY=your_gemini_api_key
+
+# YouTube Data API (Optional - for search fallback)
+YOUTUBE_API_KEY=your_youtube_api_key
 ```
 
 ### Getting API Keys
@@ -116,8 +122,12 @@ GEMINI_API_KEY=your_gemini_api_key
    - Create app → Copy Client ID & Secret
 
 3. **Gemini API Key**:
-   - Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
+   - Visit [Google AI Studio](https://aistudio.google.com/app/apikey)
    - Generate API key
+
+4. **YouTube Data API Key** (Optional):
+   - Visit [Google Cloud Console](https://console.cloud.google.com/)
+   - Enable YouTube Data API v3 → Create API key
 
 ## Quick Start
 
@@ -196,7 +206,7 @@ GEMINI_API_KEY=your_gemini_api_key
 ```
 
 **Features:**
-- 🧠 Powered by Google Gemini 2.0 Flash
+- 🧠 Powered by Google Gemini via `@google/genai`
 - 📝 Intelligent responses with context awareness
 - 🎯 Optimized for Discord (2000 character limit)
 - 👤 Shows username in response format
